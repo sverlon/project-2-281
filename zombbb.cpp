@@ -6,6 +6,8 @@ using namespace std;
 
 int main(int argc, char **argv)
 {
+    // speed up runtime
+    ios_base::sync_with_stdio(false);
 
     Game niraqToTheBance(argc, argv);
 
