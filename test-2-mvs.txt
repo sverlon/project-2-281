@@ -1,0 +1,20 @@
+# Similar to project spec, different seed makes the fight last 4 rounds
+quiver-capacity: 3
+random-seed: 1234
+max-rand-distance: 50
+max-rand-speed: 60
+max-rand-health: 1
+---
+round: 1
+random-zombies: 0
+named-zombies: 3
+MarkSchlissel distance: 3 speed: 1 health: 1
+MarySueColeman distance: 2 speed: 1 health: 1
+LeeBollinger distance: 1 speed: 1 health: 1
+---
+round: 2
+random-zombies: 0
+named-zombies: 3
+M distance: 3 speed: 1 health: 1
+SueColeman distance: 2 speed: 1 health: 1
+Bollinger distance: 1 speed: 1 health: 1

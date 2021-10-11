@@ -228,7 +228,7 @@ void Game::playRound(uint32_t round_number, uint32_t index)
 
         Zombie *last_killed_zombie = nullptr;
 
-        while (player.hasArrows())
+        while (player.hasArrows() && zombie_queue.size())
         {
             Zombie *close_zombie = zombie_queue.top();
             while (!close_zombie->isDead() && player.shoot())
@@ -278,7 +278,8 @@ void Game::playRound(uint32_t round_number, uint32_t index)
             cout << "\n";
         }
 
-        if (!zombie_queue.size())
+        if (!zombie_queue.size() &&
+            (round_number > zombies_per_round.size() || zombies_per_round[round_number] == 0))
         {
             cout << "VICTORY IN ROUND ";
             cout << round_number;
@@ -336,9 +337,19 @@ void Game::printStats()
 
     cout << "Last zombies killed:\n";
 
+    uint32_t lowerBound;
+    if (num_stats > dead_zombies.size())
+    {
+        lowerBound = 0;
+    }
+    else
+    {
+        lowerBound = (static_cast<uint32_t>(dead_zombies.size()) - num_stats);
+    }
+
     uint32_t i = static_cast<uint32_t>(dead_zombies.size()) - 1;
-    uint32_t index = num_stats;
-    while (i > 0 && i > (dead_zombies.size() - num_stats))
+    uint32_t index = num_stats > dead_zombies.size() ? static_cast<uint32_t>(dead_zombies.size()) : num_stats;
+    while (i > 0 && i > lowerBound)
     {
         cout << dead_zombies[i]->getName();
         cout << " " << index << "\n";
@@ -362,8 +373,17 @@ void Game::printStats()
 
     sort(dead_zombies.begin(), dead_zombies.end(), z);
 
+    if (num_stats > dead_zombies.size())
+    {
+        lowerBound = 0;
+    }
+    else
+    {
+        lowerBound = (static_cast<uint32_t>(dead_zombies.size()) - num_stats);
+    }
+
     i = static_cast<uint32_t>(dead_zombies.size()) - 1;
-    while (i > 0 && i > (dead_zombies.size() - num_stats))
+    while (i > 0 && i > lowerBound)
     {
         cout << dead_zombies[i]->getName();
         cout << " " << dead_zombies[i]->getRoundsActive() << "\n";
@@ -377,7 +397,7 @@ void Game::printStats()
     sort(dead_zombies.begin(), dead_zombies.end(), m);
 
     i = static_cast<uint32_t>(dead_zombies.size()) - 1;
-    while (i > 0 && i > (dead_zombies.size() - num_stats))
+    while (i > 0 && i > lowerBound)
     {
         cout << dead_zombies[i]->getName();
         cout << " " << dead_zombies[i]->getRoundsActive() << "\n";
