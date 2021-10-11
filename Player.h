@@ -7,7 +7,7 @@ class Player
 {
 public:
     // the only constructor needed
-    Player() : num_arrows(0), quiver_capacity(0) {}
+    Player() : num_arrows(0), quiver_capacity(0), isDead(false) {}
 
     void refillArrows()
     {
